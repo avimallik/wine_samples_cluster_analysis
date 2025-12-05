@@ -1,0 +1,77 @@
+IQR-1
+-------------------------------
+outliers = []
+index_n = []
+for i in df.columns:
+    coln = df[i]
+    coln_np = np.array(coln)
+    q1 = np.percentile(coln_np, 25)
+    q3 = np.percentile(coln_np, 75)
+
+    iqr = q3 - q1
+    low_bnd = q1 - 1.5 * iqr
+    upper_bnd = q3 + 1.5 * iqr
+
+    for j in coln_np:
+        if j < low_bnd:
+            outliers.append(j)
+            index_n.append(outliers.index(j))
+            outliers.append(np.median)
+        elif j > upper_bnd:
+            outliers.append(j)
+            index_n.append(outliers.index(j))
+            outliers.append(np.median)
+    
+print(f'Total detected outliers : {len(outliers)}')
+print(index_n)
+
+IQR-2
+----------------------------------
+# outliers = []
+# columns = []
+# for i in df_exp.columns:
+#     if df_exp[i].dtypes == 'int64' or df_exp[i].dtypes == 'float64':
+#         q1 = df_exp[i].quantile(0.25)
+#         q3 = df_exp[i].quantile(0.75)
+
+#         iqr = q3 - q1
+#         lower_bound = q1 - 1.5*iqr
+#         upper_bound = q3 + 1.5*iqr
+
+#         for j in df_exp[i]:
+#             if j < lower_bound or j > upper_bound :
+#                 outliers.append(j)
+#                 columns.append(df[i])
+
+# len(outliers)
+
+IQR-3
+------------------------------------
+# outliers = []
+# inliers = []
+# columns = []
+# index_outliers = []
+
+# for i in df_exp.columns:
+#     if df_exp[i].dtypes == 'int64' or df_exp[i].dtypes == 'float64':
+#         q1 = df_exp[i].quantile(0.25)
+#         q3 = df_exp[i].quantile(0.75)
+
+#         iqr = q3 - q1
+#         lower_bound = q1 - 1.5*iqr
+#         upper_bound = q3 + 1.5*iqr
+
+#         for j in df_exp[i]:
+#             if j < lower_bound or j > upper_bound :
+#                 outliers.append(j)
+#                 index_outliers.append(outliers.index(j))
+#                 # columns.append(i)
+#             else:
+#                 inliers.append(j)
+            
+# print(f'outliers: {outliers}')
+# print(f'inliers: {inliers}')
+# print(f'Index of outliers: {index_outliers}')
+# print(f'Counted outliers: {len(outliers)}')
+
+    
